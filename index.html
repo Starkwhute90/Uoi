@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetic Clock</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #time {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        #quote {
+            font-size: 24px;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        #symbol {
+            font-size: 80px;
+            color: pink;
+        }
+
+        #elapsed {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: white;
+            color: black;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="elapsed">Elapsed: 00:00:00</div>
+    <div id="time"></div>
+    <div id="quote"></div>
+    <div id="symbol">🌸</div>
+
+    <script>
+        // Custom quotes
+        const quotes = [
+            "I’m always within you Avani..",
+            "I’ll always be there to protect you…",
+            "You’re mine and you’ll always be mine."
+        ];
+
+        // Start time
+        const startTime = new Date().getTime();
+
+        function updateClock() {
+            // Display current time
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+
+            // Display changing quotes
+            const currentSecond = now.getSeconds();
+            document.getElementById('quote').textContent = quotes[currentSecond % quotes.length];
+
+            // Elapsed time calculation
+            const elapsedTime = now.getTime() - startTime;
+            const elapsedHours = Math.floor(elapsedTime / (1000 * 60 * 60));
+            const elapsedMinutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+            const elapsedSeconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+            document.getElementById('elapsed').textContent = `Elapsed: ${String(elapsedHours).padStart(2, '0')}:${String(elapsedMinutes).padStart(2, '0')}:${String(elapsedSeconds).padStart(2, '0')}`;
+        }
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+    </script>
+
+</body>
+</html>
